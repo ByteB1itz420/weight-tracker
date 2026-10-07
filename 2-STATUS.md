@@ -1,0 +1,12 @@
+# STATUS
+
+- Oct 7: Initial private build (hardcoded seed) superseded same day by the public pivot.
+- Oct 7 (public pivot): Rebuilt as a public no-account app. No personal data in the bundle - every visitor starts at onboarding (current weight, goal, optional goal date). Cut/bulk read (7-entry avg vs previous 7), trend chart with goal line, stats + progress, log list, import/export JSON + CSV export, editable goal, reset-everything. Ayush's own 137-entry history ships separately as ayush-seed.json (kept out of the repo and the deploy bundle; imported once on his phone via Import JSON). Deployed: https://weight-tracker-eight-pi.vercel.app - verified publicly accessible, no auth wall.
+- Fixes shipped same session: log-row wraps on narrow screens (date input was truncating); theme-toggle icon specificity (both icons showed); chart goal label clipped at right edge; flat deltas rendered "-0.0".
+- Verified in cloud browser at mobile viewport (390x844): onboarding renders, import of the 137-entry seed reconstructs the full history (78.0 -> 69.1, goal 65 by Oct 31), cut/bulk read shows "cutting", icons correct per theme.
+- Oct 7 (seed links): app accepts #seed=<base64url JSON> in the URL hash (never sent to a server) and shows a one-tap restore banner (Load / Start fresh; Replace wording if a log exists). Hash stripped after either choice. Ayush's personal link generated from ayush-seed.json (kept out of repo + bundle). Compact seed form added ({p:{s,g,d},w:[kg,...]}) so one-tap links stay under WhatsApp's limit.
+- Oct 7 (edit entries): tap any weight in the log list for inline edit (Enter/Save, Esc/Cancel, 30-300 kg validation). Delete already existed (two-tap). Stats row gained 7-entry avg + overall avg tiles and a week-by-week line (this calendar week avg vs last week, Mon-Sun, dated entries only). Delete confirm window widened to 4s with a stable-width button. Delete reworked: tap x swaps the row to an explicit 'Delete day N?' Delete/Keep bar (no timeout - the old 2.5-4s auto-revert raced slow second taps, which is why his junk point wouldn't delete). Index recomputed at click time.
+
+
+## 2026-10-07 - exact two-decimal weights
+Bug fix: the app rounded every entry to one decimal (68.85 became 68.9). Storage now keeps the exact number entered (onboarding, daily log, inline edit, import, goal). Display: stored weights render exactly as entered; differences show up to two decimals; averages and rates stay at one decimal. Number inputs moved to step 0.01.
